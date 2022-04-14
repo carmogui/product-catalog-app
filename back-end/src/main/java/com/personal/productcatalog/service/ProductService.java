@@ -1,5 +1,6 @@
 package com.personal.productcatalog.service;
 
+import com.personal.productcatalog.exception.NotFoundException;
 import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +20,10 @@ public class ProductService {
 
     public List<Product> findAll(){
         return productRepository.findAll();
+    }
+
+    public Product findById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Not found product with id " + id));
     }
 }

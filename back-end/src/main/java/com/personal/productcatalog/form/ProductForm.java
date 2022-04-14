@@ -13,5 +13,4 @@ public class ProductForm {
     private Integer stock;
     @NotNull
     private BigDecimal price;
-
 }

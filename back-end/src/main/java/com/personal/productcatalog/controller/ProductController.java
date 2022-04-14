@@ -4,7 +4,6 @@ import com.personal.productcatalog.dto.ProductDTO;
 import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +14,7 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
 
     @Autowired
     public ProductController(ProductService productService) {
@@ -27,5 +26,4 @@ public class ProductController {
         List<Product> products = productService.findAll();
         return ProductDTO.toDTO(products);
     }
-
 }
