@@ -1,0 +1,15 @@
+# Spring Configuration
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.Oracle12cDialect
+        format_sql: 'true'
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driverClassName: oracle.jdbc.OracleDriver
+    username: c##guilherme
+    password: passw0rd
+    url: jdbc:oracle:thin:@//localhost:32118
