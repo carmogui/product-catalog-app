@@ -1,13 +1,17 @@
 package com.personal.productcatalog.controller;
 
 import com.personal.productcatalog.dto.ProductDTO;
+import com.personal.productcatalog.form.ProductForm;
 import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -25,5 +29,27 @@ public class ProductController {
     public List<ProductDTO> findAll() {
         List<Product> products = productService.findAll();
         return ProductDTO.toDTO(products);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+        Product product = productService.findById(id);
+        return ResponseEntity.ok(new ProductDTO(product));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<ProductDTO> deleteById(@PathVariable Long id) {
+        productService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping
+    @Transactional
+    public ResponseEntity<ProductDTO> saveByForm(@RequestBody @Valid ProductForm form, UriComponentsBuilder uriBuilder) {
+        Product product = productService.saveByForm(form);
+
+        URI uri = uriBuilder.path("/product/{id}").buildAndExpand(product.getId()).toUri();
+        return ResponseEntity.created(uri).body(new ProductDTO(product));
     }
 }

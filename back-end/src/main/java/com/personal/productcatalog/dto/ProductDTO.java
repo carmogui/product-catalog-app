@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 @Getter
 public class ProductDTO {
 
-    private Long id;
-    private String name;
-    private Integer stock;
-    private BigDecimal price;
+    private final Long id;
+    private final String name;
+    private final Integer stock;
+    private final BigDecimal price;
 
     public ProductDTO(Product product) {
         this.id = product.getId();
