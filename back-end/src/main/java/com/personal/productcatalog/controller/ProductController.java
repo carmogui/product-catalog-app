@@ -6,6 +6,7 @@ import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -14,8 +15,12 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+import static com.personal.productcatalog.utils.SecurityUtils.ROLE_ADMIN;
+import static com.personal.productcatalog.utils.SecurityUtils.ROLE_USER;
+
 @RestController
 @RequestMapping("/product")
+@Secured({ROLE_ADMIN, ROLE_USER})
 public class ProductController {
 
     private final ProductService productService;
