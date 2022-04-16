@@ -27,7 +27,7 @@ public abstract class AbstractExceptionHandler {
         exceptionError.setDate(LocalDateTime.now());
         exceptionError.setMessage(ex.getMessage());
 
-        List<String> trace = getTraceByLimit(ex, 5);
+        List<String> trace = getTraceByLimit(ex);
         exceptionError.setTrace(trace);
 
         List<ErrorDTO> errors = getErrors(ex);
@@ -51,9 +51,9 @@ public abstract class AbstractExceptionHandler {
         return errors;
     }
 
-    private List<String> getTraceByLimit(Exception ex, Integer limit) {
+    private List<String> getTraceByLimit(Exception ex) {
         return Arrays.stream(ex.getStackTrace())
-                .limit(limit)
+                .limit(5)
                 .map(StackTraceElement::toString)
                 .collect(Collectors.toList());
     }
