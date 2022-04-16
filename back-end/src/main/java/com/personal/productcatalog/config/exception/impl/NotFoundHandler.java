@@ -1,5 +1,6 @@
-package com.personal.productcatalog.handler;
+package com.personal.productcatalog.config.exception.impl;
 
+import com.personal.productcatalog.config.exception.AbstractExceptionHandler;
 import com.personal.productcatalog.dto.ExceptionErrorDTO;
 import com.personal.productcatalog.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -13,22 +14,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
-public class NotFoundHandler {
+public class NotFoundHandler extends AbstractExceptionHandler {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler({NotFoundException.class})
     public ExceptionErrorDTO handle(Exception ex) {
-        ExceptionErrorDTO exceptionError = new ExceptionErrorDTO();
-
-        List<String> trace = Arrays.stream(ex.getStackTrace())
-                .limit(5)
-                .map(StackTraceElement::toString)
-                .collect(Collectors.toList());
+        ExceptionErrorDTO exceptionError = getBaseException(ex);
 
         exceptionError.setCode(HttpStatus.NOT_FOUND.value());
-        exceptionError.setDate(LocalDateTime.now());
-        exceptionError.setMessage(ex.getMessage());
-        exceptionError.setTrace(trace);
 
         return exceptionError;
     }
