@@ -19,9 +19,16 @@ spring:
         jwt:
           issuer-uri: http://localhost:32119/realms/product-catalog
           jwk-set-uri: http://localhost:32119/realms/product-catalog/protocol/openid-connect/certs
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
 
+server:
+  servlet:
+    context-path: /api/
 #logging:
 #  level:
 #    org:
 #      springframework:
 #        security: DEBUG
+
