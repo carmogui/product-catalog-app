@@ -4,6 +4,7 @@ import com.personal.productcatalog.dto.ProductDTO;
 import com.personal.productcatalog.form.ProductForm;
 import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.service.ProductService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -18,6 +19,7 @@ import java.util.List;
 import static com.personal.productcatalog.utils.SecurityUtils.ROLE_ADMIN;
 import static com.personal.productcatalog.utils.SecurityUtils.ROLE_USER;
 
+@Api(tags = "Product")
 @RestController
 @RequestMapping("/product")
 @Secured({ROLE_ADMIN, ROLE_USER})
