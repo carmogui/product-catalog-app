@@ -38,8 +38,6 @@ public class ProductService {
         Product product = new Product();
         BeanUtils.copyProperties(form, product);
 
-        productRepository.save(product);
-
-        return product;
+        return productRepository.save(product);
     }
 }
