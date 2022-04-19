@@ -1,4 +1,4 @@
-package com.personal.productcatalog.unity.form;
+package com.personal.productcatalog.form;
 
 import com.personal.productcatalog.form.ProductForm;
 import org.junit.jupiter.api.Assertions;

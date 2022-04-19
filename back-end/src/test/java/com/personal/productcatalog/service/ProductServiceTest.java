@@ -1,10 +1,9 @@
-package com.personal.productcatalog.integration.service;
+package com.personal.productcatalog.service;
 
 import com.personal.productcatalog.fixture.ProductFixture;
 import com.personal.productcatalog.form.ProductForm;
 import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.repository.ProductRepository;
-import com.personal.productcatalog.service.ProductService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeanUtils;
