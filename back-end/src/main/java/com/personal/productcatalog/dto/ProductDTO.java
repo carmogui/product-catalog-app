@@ -2,10 +2,9 @@ package com.personal.productcatalog.dto;
 
 import com.personal.productcatalog.model.Product;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 public class ProductDTO {
@@ -22,9 +21,7 @@ public class ProductDTO {
         this.price = product.getPrice();
     }
 
-    public static List<ProductDTO> toDTO(List<Product> products) {
-        return products.stream()
-                .map(ProductDTO::new)
-                .collect(Collectors.toList());
+    public static Page<ProductDTO> toDTO(Page<Product> products) {
+        return products.map(ProductDTO::new);
     }
 }

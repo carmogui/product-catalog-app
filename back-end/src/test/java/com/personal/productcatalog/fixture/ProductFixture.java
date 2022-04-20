@@ -3,6 +3,8 @@ package com.personal.productcatalog.fixture;
 import com.personal.productcatalog.model.Product;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -34,6 +36,11 @@ public class ProductFixture {
                 .range(0, quantity)
                 .mapToObj(x -> ProductFixture.get().buildRandom())
                 .collect(Collectors.toList());
+    }
+
+    public Page<Product> buildRandomPage(int quantity) {
+        List<Product> products = buildRandomList(quantity);
+        return new PageImpl<>(products);
     }
 
     private ProductFixture random() {
