@@ -10,8 +10,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -28,12 +30,16 @@ public class ProductServiceTest {
     @Test
     public void shouldReturnAllProducts() {
         int expectedSize = 5;
+        int page = 0;
+        int quantity = 10;
 
-        when(productRepository.findAll()).thenReturn(ProductFixture.get().buildRandomList(expectedSize));
+        Pageable pageable = PageRequest.of(page, quantity);
 
-        List<Product> products = productService.findAll();
+        when(productRepository.findAll(pageable)).thenReturn(ProductFixture.get().buildRandomPage(5));
 
-        Assertions.assertEquals(expectedSize, products.size());
+        Page<Product> products = productService.findAll(pageable);
+
+        Assertions.assertEquals(expectedSize, products.getTotalElements());
     }
 
     @Test
