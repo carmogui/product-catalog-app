@@ -34,8 +34,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public Page<ProductDTO> findAll(Pageable pageable) {
-        Page<Product> products = productService.findAll(pageable);
+    public Page<ProductDTO> findAll(@RequestBody(required = false) ProductForm form, Pageable pageable) {
+        Page<Product> products = productService.findAll(form, pageable);
         return ProductDTO.toDTO(products);
     }
 

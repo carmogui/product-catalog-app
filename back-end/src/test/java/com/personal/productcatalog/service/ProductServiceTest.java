@@ -1,15 +1,18 @@
 package com.personal.productcatalog.service;
 
+import com.personal.productcatalog.builder.FilterBuilder;
 import com.personal.productcatalog.fixture.ProductFixture;
 import com.personal.productcatalog.form.ProductForm;
 import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.repository.ProductRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -35,9 +39,9 @@ public class ProductServiceTest {
 
         Pageable pageable = PageRequest.of(page, quantity);
 
-        when(productRepository.findAll(pageable)).thenReturn(ProductFixture.get().buildRandomPage(5));
+        when(productRepository.findAll(any(), eq(pageable))).thenReturn(ProductFixture.get().buildRandomPage(expectedSize));
 
-        Page<Product> products = productService.findAll(pageable);
+        Page<Product> products = productService.findAll(null, pageable);
 
         Assertions.assertEquals(expectedSize, products.getTotalElements());
     }
