@@ -5,11 +5,14 @@ import com.personal.productcatalog.form.ProductForm;
 import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.service.ProductService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -34,12 +37,14 @@ public class ProductController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Find all products by a ProductForm filter and pageable data")
     public Page<ProductDTO> findAll(@RequestBody(required = false) ProductForm form, Pageable pageable) {
         Page<Product> products = productService.findAll(form, pageable);
         return ProductDTO.toDTO(products);
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Find product by id")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
         Product product = productService.findById(id);
         return ResponseEntity.ok(new ProductDTO(product));
@@ -47,6 +52,7 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @ApiOperation(value = "Delete product by id")
     public ResponseEntity<ProductDTO> deleteById(@PathVariable Long id) {
         productService.deleteById(id);
         return ResponseEntity.ok().build();
@@ -54,6 +60,7 @@ public class ProductController {
 
     @PostMapping
     @Transactional
+    @ApiOperation(value = "Save a new product by ProductForm")
     public ResponseEntity<ProductDTO> saveByForm(@RequestBody @Valid ProductForm form, UriComponentsBuilder uriBuilder) {
         Product product = productService.saveByForm(form);
 
