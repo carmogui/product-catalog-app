@@ -4,12 +4,15 @@ import com.personal.productcatalog.exception.NotFoundException;
 import com.personal.productcatalog.form.ProductForm;
 import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.repository.ProductRepository;
+import com.personal.productcatalog.builder.FilterBuilder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import static java.util.Objects.isNull;
 
 @Service
 public class ProductService {
@@ -21,8 +24,13 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Page<Product> findAll(Pageable pageable){
-        return productRepository.findAll(pageable);
+    public Page<Product> findAll(ProductForm form, Pageable pageable) {
+        ProductForm productForm = isNull(form) ? new ProductForm() : form;
+
+        FilterBuilder<ProductForm, Product> builder = new FilterBuilder<>();
+        Example<Product> filter = builder.createFilterIgnoringNullValues(productForm, new Product());
+
+        return productRepository.findAll(filter, pageable);
     }
 
     public Product findById(Long id) {
