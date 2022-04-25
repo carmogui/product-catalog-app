@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 
 public class ActionUtils {
 
-    public static  <T> void updateToChainOfResponsibility(Iterator<T> iterator, BiConsumer<T, T> consumer) {
+    public static  <T> void createChainOfResponsibilityList(Iterator<T> iterator, BiConsumer<T, T> consumer) {
         if(iterator != null && iterator.hasNext()) {
             T current = iterator.next();
 

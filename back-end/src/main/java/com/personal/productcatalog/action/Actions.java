@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static com.personal.productcatalog.utils.ActionUtils.updateToChainOfResponsibility;
+import static com.personal.productcatalog.utils.ActionUtils.createChainOfResponsibilityList;
 
 @Component
 public class Actions {
@@ -23,7 +23,7 @@ public class Actions {
     public Actions(List<CreateProduct> createProductActions) {
         this.createProductActions = createProductActions;
 
-        updateToChainOfResponsibility(createProductActions.iterator(), (c1, c2) -> c1.linkWith((CreateProductAction) c2));
+        createChainOfResponsibilityList(createProductActions.iterator(), (c1, c2) -> c1.linkWith((CreateProductAction) c2));
     }
 
     @Transactional(rollbackOn = Exception.class)
