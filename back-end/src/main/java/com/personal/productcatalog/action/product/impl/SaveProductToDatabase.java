@@ -1,12 +1,13 @@
-package com.personal.productcatalog.action.product;
+package com.personal.productcatalog.action.product.impl;
 
+import com.personal.productcatalog.action.product.ProductAction;
 import com.personal.productcatalog.annotations.Action;
 import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Action
-public class SaveInDatabase extends CreateProductAction {
+public class SaveProductToDatabase extends ProductAction {
 
     @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
