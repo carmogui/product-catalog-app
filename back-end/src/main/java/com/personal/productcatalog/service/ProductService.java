@@ -43,10 +43,7 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-    public Product saveByForm(ProductForm form) {
-        Product product = new Product();
-        BeanUtils.copyProperties(form, product);
-
+    public Product save(Product product) {
         return productRepository.save(product);
     }
 }
