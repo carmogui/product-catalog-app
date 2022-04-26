@@ -1,11 +1,11 @@
-package com.personal.productcatalog.action.product.impl;
+package com.personal.productcatalog.action.product;
 
-import com.personal.productcatalog.action.product.ProductAction;
+import com.personal.productcatalog.action.AbstractAction;
 import com.personal.productcatalog.annotations.Action;
 import com.personal.productcatalog.model.Product;
 
 @Action
-public class SendEmailCreatedProduct extends ProductAction {
+public class SendEmailCreatedAbstract extends AbstractAction<Product> {
 
     @Override
     public Product perform(Product product) {
