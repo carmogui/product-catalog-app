@@ -1,6 +1,5 @@
 package com.personal.productcatalog.action;
 
-import com.personal.productcatalog.action.product.ProductAction;
 import com.personal.productcatalog.form.ProductForm;
 import com.personal.productcatalog.model.Product;
 import org.springframework.beans.BeanUtils;
@@ -12,10 +11,10 @@ import javax.transaction.Transactional;
 
 @Component
 public class Actions {
-    private final ProductAction createProduct;
+    private final AbstractAction<Product> createProduct;
 
     @Autowired
-    public Actions(@Qualifier("createProduct") ProductAction createProduct) {
+    public Actions(@Qualifier("createProduct") AbstractAction<Product> createProduct) {
         this.createProduct = createProduct;
     }
 
