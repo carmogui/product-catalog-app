@@ -1,5 +1,7 @@
 package com.personal.productcatalog.action;
 
+import org.springframework.stereotype.Component;
+
 import static java.util.Objects.isNull;
 
 public abstract class AbstractAction<T> {
