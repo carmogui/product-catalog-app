@@ -1,11 +1,10 @@
 package com.personal.productcatalog.service;
 
+import com.personal.productcatalog.builder.FilterBuilder;
 import com.personal.productcatalog.exception.NotFoundException;
 import com.personal.productcatalog.form.ProductForm;
 import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.repository.ProductRepository;
-import com.personal.productcatalog.builder.FilterBuilder;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
