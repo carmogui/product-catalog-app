@@ -2,51 +2,38 @@ package com.personal.productcatalog.action.product;
 
 import com.personal.productcatalog.action.AbstractAction;
 import com.personal.productcatalog.annotations.Action;
+import com.personal.productcatalog.model.Email;
 import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.model.User;
+import com.personal.productcatalog.service.EmailService;
 import com.personal.productcatalog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import static com.personal.productcatalog.utils.EmailUtils.readEmailBodyFile;
 
 @Action
 public class SendEmailProductCreated extends AbstractAction<Product> {
 
+    private static final String SUBJECT = "O produto foi criado!";
+    private static final String BODY = readEmailBodyFile("created-product");
+
     @Autowired
     private UserService userService;
     @Autowired
-    private JavaMailSender mailSender;
+    private EmailService emailService;
 
     @Override
     public Product perform(Product product) {
-        User currentUser = userService.getCurrentUser();
+        User user = userService.getCurrentUser();
 
-        try {
-            MimeMessage mail = mailSender.createMimeMessage();
+        Email email = new Email(user.getEmail(), SUBJECT, getBodyWithParameters(product, user));
 
-            MimeMessageHelper helper = new MimeMessageHelper(mail);
-            helper.setTo(currentUser.getEmail());
-            helper.setSubject("A product has been created");
-
-            String message = createMessage(product, currentUser);
-            helper.setText(message, true);
-
-            mailSender.send(mail);
-
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        emailService.send(email);
 
         return performNext(product);
     }
 
-    private String createMessage(Product product, User user) {
-        return String.format("<p>" +
-                "Olá %s, o produto [%d]-[%s] foi criado com sucesso" +
-                "</p>", user.getName(), product.getId(), product.getName());
+    private String getBodyWithParameters(Product product, User user) {
+        return String.format(BODY, user.getName(), product.getId(), product.getName());
     }
 }
