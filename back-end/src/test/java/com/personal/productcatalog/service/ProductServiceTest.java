@@ -1,79 +1,79 @@
 package com.personal.productcatalog.service;
 
-import com.personal.productcatalog.builder.FilterBuilder;
+import com.personal.productcatalog.exception.NotFoundException;
 import com.personal.productcatalog.fixture.ProductFixture;
-import com.personal.productcatalog.form.ProductForm;
 import com.personal.productcatalog.model.Product;
 import com.personal.productcatalog.repository.ProductRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Example;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.only;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
 
-    @Autowired
+    private static final int LIST_SIZE = 5;
+    private static final long NON_EXISTENT_ID = 9999999999L;
+
+    @InjectMocks
     private ProductService productService;
-    @MockBean
+    @Mock
     private ProductRepository productRepository;
 
     @Test
     public void shouldReturnAllProducts() {
-        int expectedSize = 5;
-        int page = 0;
-        int quantity = 10;
+        Pageable page = PageRequest.of(0, 10);
 
-        Pageable pageable = PageRequest.of(page, quantity);
+        given(productRepository.findAll(any(), eq(page))).willReturn(ProductFixture.get().buildRandomPage(LIST_SIZE));
 
-        when(productRepository.findAll(any(), eq(pageable))).thenReturn(ProductFixture.get().buildRandomPage(expectedSize));
+        Page<Product> products = productService.findAll(null, page);
 
-        Page<Product> products = productService.findAll(null, pageable);
-
-        Assertions.assertEquals(expectedSize, products.getTotalElements());
+        then(productRepository).should(only()).findAll(any(), eq(page));
+        assertEquals(LIST_SIZE, products.getTotalElements());
     }
 
     @Test
     public void shouldReturnProductById() {
-        Product expectedProduct = ProductFixture.get().buildRandom();
+        Product product = ProductFixture.get().buildRandom();
+        given(productRepository.findById(product.getId())).willReturn(Optional.of(product));
 
-        when(productRepository.findById(expectedProduct.getId())).thenReturn(Optional.of(expectedProduct));
+        Product received = productService.findById(product.getId());
 
-        Product product = productService.findById(expectedProduct.getId());
-
-        Assertions.assertEquals(expectedProduct, product);
+        then(productRepository).should(only()).findById(product.getId());
+        assertEquals(product, received);
     }
 
     @Test
-    public void shouldSaveProductByForm() {
-//        Product expectedProduct = ProductFixture.get().buildRandom();
-//        ProductForm productForm = getProductFormByProduct(expectedProduct);
-//
-//        when(productRepository.save(any(Product.class))).thenReturn(expectedProduct);
-//
-//        Product product = productService.saveByForm(productForm);
-//
-//        Assertions.assertEquals(expectedProduct.getName(), product.getName());
-//        Assertions.assertEquals(expectedProduct.getPrice(), product.getPrice());
-//        Assertions.assertEquals(expectedProduct.getStock(), product.getStock());
+    public void shouldThrowExceptionWhenProductNotExistingInRepository() {
+        given(productRepository.findById(NON_EXISTENT_ID)).willReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> productService.findById(NON_EXISTENT_ID));
+        then(productRepository).should(only()).findById(NON_EXISTENT_ID);
     }
 
-    private ProductForm getProductFormByProduct(Product expectedProduct) {
-        ProductForm productForm = new ProductForm();
-        BeanUtils.copyProperties(expectedProduct, productForm);
-        return productForm;
+    @Test
+    public void shouldSaveProduct() {
+        Product product = ProductFixture.get().buildRandom();
+
+        given(productRepository.save(product)).willReturn(product);
+
+        Product productSaved = productService.save(product);
+
+        then(productRepository).should(only()).save(product);
+        assertEquals(product, productSaved);
     }
 }

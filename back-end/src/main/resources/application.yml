@@ -34,7 +34,7 @@ spring:
           auth: true
     host: smtp.gmail.com
     username: productcatalogofficial@gmail.com
-    password: SENHA
+    password: Produto123@
     test-connection: true
     port: 587
 

@@ -51,24 +51,23 @@ public class ProductFixture {
                 .withPrice(new BigDecimal(RandomStringUtils.randomNumeric(3)));
     }
 
-    private ProductFixture withPrice(BigDecimal price) {
+    public ProductFixture withPrice(BigDecimal price) {
         product.setPrice(price);
         return this;
     }
 
-    private ProductFixture withStock(Integer stock) {
+    public ProductFixture withStock(Integer stock) {
         product.setStock(stock);
         return this;
     }
 
-    private ProductFixture withName(String name) {
+    public ProductFixture withName(String name) {
         product.setName(name);
         return this;
     }
 
-    private ProductFixture withId(Long id) {
+    public ProductFixture withId(Long id) {
         product.setId(id);
         return this;
     }
-
 }
