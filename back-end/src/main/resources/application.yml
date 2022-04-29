@@ -11,7 +11,7 @@ spring:
   datasource:
     driverClassName: oracle.jdbc.OracleDriver
     username: c##guilherme
-    password: passw0rd
+    password: ${DB_PASSWORD}
     url: jdbc:oracle:thin:@//localhost:32118
   security:
     oauth2:
@@ -34,7 +34,7 @@ spring:
           auth: true
     host: smtp.gmail.com
     username: productcatalogofficial@gmail.com
-    password: Produto123@
+    password: ${EMAIL_PASSWORD}
     test-connection: true
     port: 587
 
