@@ -28,7 +28,7 @@ public class SendEmailProductCreated extends AbstractAction<Product> {
 
         Email email = new Email(user.getEmail(), SUBJECT, getBodyWithParameters(product, user));
 
-        emailService.send(email);
+        emailService.sendAsync(email);
 
         return performNext(product);
     }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.concurrent.SubmissionPublisher;
 
 @Service
 public class EmailService {
@@ -19,6 +20,13 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    public void sendAsync(Email email) {
+        SubmissionPublisher<Email> publisher = new SubmissionPublisher<>();
+        publisher.consume(this::send);
+        publisher.submit(email);
+        publisher.close();
+    }
 
     public void send(Email email) {
         try {
