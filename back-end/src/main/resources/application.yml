@@ -13,12 +13,6 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${ISSUER_URI}
-          jwk-set-uri: ${JWK_SET_URI}
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
