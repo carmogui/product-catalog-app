@@ -3,22 +3,16 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.Oracle12cDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: 'true'
     show-sql: 'true'
     hibernate:
       ddl-auto: update
   datasource:
-    driverClassName: oracle.jdbc.OracleDriver
-    username: c##guilherme
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-    url: jdbc:oracle:thin:@//localhost:32118
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:32119/realms/product-catalog
-          jwk-set-uri: http://localhost:32119/realms/product-catalog/protocol/openid-connect/certs
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
@@ -37,7 +31,6 @@ spring:
     password: ${EMAIL_PASSWORD}
     test-connection: true
     port: 587
-
 
 server:
   servlet:
