@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "4a41c5fe-341e-4960-879f-1d6b692df77c",
+		"name": "Keycloak",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.environment.set(\"access_token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{KEYCLOAK_SECRET}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "product-catalog-api",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{KEYCLOAK_USERNAME}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{KEYCLOAK_PASSWORD}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{KEYCLOAK_URL}}/protocol/openid-connect/token",
+					"host": [
+						"{{KEYCLOAK_URL}}"
+					],
+					"path": [
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
