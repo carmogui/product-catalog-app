@@ -1,6 +1,8 @@
 package com.personal.productcatalog.utils;
 
 import com.personal.productcatalog.model.User;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -22,13 +24,9 @@ public abstract class UserUtils {
     }
 
     public static Map<String, Object> getAllClaimsCurrentUser() {
-//        return  ((Jwt) SecurityContextHolder.getContext()
-//                .getAuthentication().getPrincipal())
-//                .getClaims();
-        return new HashMap<>(){{
-            put("name", "Guilherme Scherer");
-            put("email", "guilherme_scherer@outlook.com");
-        }};
+        return  ((Jwt) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal())
+                .getClaims();
     }
 
     public static boolean isValidUserClaim(Map.Entry<String, Object> entry) {

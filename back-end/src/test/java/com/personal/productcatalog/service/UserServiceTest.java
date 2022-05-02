@@ -21,7 +21,7 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
-    private static final String DEFAULT_NAME = "Guilherme";
+    private static final String DEFAULT_NAME = "Guilherme Scherer";
     private static final String DEFAULT_EMAIL = "email@123.com.br";
 
     @InjectMocks
