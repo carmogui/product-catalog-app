@@ -1,14 +1,17 @@
-import { Button } from "./components";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home, Catalog, NotFound, Product } from "./routes";
 
 function App() {
   return (
-    <div>
-      <h1>product-catalog</h1>
-      <Button onClick={() => alert("primary")}>primary button</Button>
-      <Button onClick={() => alert("link")} variant="link">
-        link button
-      </Button>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="catalog" element={<Catalog />} />
+        <Route path="product" element={<Product />} />
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

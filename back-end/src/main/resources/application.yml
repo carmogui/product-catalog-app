@@ -16,6 +16,12 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URI}
+          jwk-set-uri: ${JWK_SET_URI}
   mail:
     properties:
       mail:
