@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Main = styled.button`
   padding: 10px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   font-weight: bold;
 
   &:hover {
@@ -11,7 +11,13 @@ export const Main = styled.button`
   }
 
   &.primary {
-    background-color: cadetblue;
+    background-color: ${({ theme }) => theme.primary};
+    text-transform: uppercase;
+  }
+
+  &.secondary {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 2px ${({ theme }) => theme.primary};
     text-transform: uppercase;
   }
 
