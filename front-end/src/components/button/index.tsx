@@ -2,7 +2,7 @@ import { FC } from "react";
 import * as S from "./style";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "link";
+  variant?: "primary" | "secondary" | "link";
 }
 
 export const Button: FC<Props> = ({

@@ -11,7 +11,7 @@ export function Home() {
       </Link>
 
       <Link to="/product">
-        <Button>Product</Button>
+        <Button variant="secondary">Product</Button>
       </Link>
     </main>
   );
