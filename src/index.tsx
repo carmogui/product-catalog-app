@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { ThemeProvider } from "styled-components";
-import { GlobalStyle, light } from "./global";
+import { GlobalStyle, light } from "./static";
 import App from "./App";
 
 const root = ReactDOM.createRoot(
