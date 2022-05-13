@@ -1,21 +1,28 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router";
 import { Button, Input } from "../../components";
-import { auth } from "../../services/";
+import AuthContext from "../../context/auth";
 import * as S from "./styles";
 
-export function LoginPage() {
+export function Login() {
+  const navigation = useNavigate();
+  const context = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   async function handleSubmit(e: any) {
     e.preventDefault();
 
-    const data = await auth({ username, password });
+    context.login({ username, password });
 
-    if (data.status === 200) {
-      localStorage.setItem("access_token", data.data.access_token);
-      localStorage.setItem("refresh_token", data.data.refresh_token);
-    }
+    navigation("/catalog");
+
+    // const data = await auth({ username, password });
+
+    // if (data.status === 200) {
+    //   localStorage.setItem("access_token", data.data.access_token);
+    //   localStorage.setItem("refresh_token", data.data.refresh_token);
+    // }
   }
 
   return (
