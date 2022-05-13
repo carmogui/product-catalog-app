@@ -1,18 +1,26 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, Catalog, NotFound, Product } from "./routes";
+import { AuthProvider } from "./context/auth";
+import { Routes } from "./routes";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="catalog" element={<Catalog />} />
-        <Route path="product" element={<Product />} />
-
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
   );
 }
+// function App() {
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         <Route path="/" element={<Login />} />
+//         <Route path="home" element={<Home />} />
+//         <Route path="catalog" element={<Catalog />} />
+//         <Route path="product" element={<Product />} />
+
+//         <Route path="*" element={<NotFound />} />
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
 
 export default App;
