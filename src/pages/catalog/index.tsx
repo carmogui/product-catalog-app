@@ -13,7 +13,7 @@ export function Catalog() {
       method: "post",
       url: "http://productcatalog-api.herokuapp.com/api/product",
       headers: {
-        Authorization: `Basic ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
