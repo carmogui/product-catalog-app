@@ -28,6 +28,8 @@ export async function auth({ username, password }: AuthProps) {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     withCredentials: true,
+  }).catch((error) => {
+    return error.response;
   });
 
   return result;

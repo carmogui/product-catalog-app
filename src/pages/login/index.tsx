@@ -1,28 +1,30 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Button, Input } from "../../components";
-import AuthContext from "../../context/auth";
+import { useAuth } from "../../context/auth";
 import * as S from "./styles";
 
 export function Login() {
   const navigation = useNavigate();
-  const context = useContext(AuthContext);
+  const { login } = useAuth();
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   async function handleSubmit(e: any) {
     e.preventDefault();
+    setLoading(true);
 
-    context.login({ username, password });
+    const data = await login({ username, password });
 
-    navigation("/catalog");
+    setLoading(false);
 
-    // const data = await auth({ username, password });
-
-    // if (data.status === 200) {
-    //   localStorage.setItem("access_token", data.data.access_token);
-    //   localStorage.setItem("refresh_token", data.data.refresh_token);
-    // }
+    if (data?.status === 200) {
+      navigation("/");
+    } else {
+      setError(true);
+    }
   }
 
   return (
@@ -46,7 +48,12 @@ export function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <Button type="submit">Login</Button>
+        <Button type="submit" disabled={loading}>
+          Login
+        </Button>
+
+        {error && !loading && <p>credenciais incorretas</p>}
+        {loading && <p>carregando</p>}
       </S.Wrapper>
     </S.Main>
   );
