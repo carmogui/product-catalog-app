@@ -1,18 +1,11 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, Catalog, NotFound, Product, LoginPage } from "./routes";
+import { AuthProvider } from "./context/auth";
+import { Routes } from "./routes";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="home" element={<Home />} />
-        <Route path="catalog" element={<Catalog />} />
-        <Route path="product" element={<Product />} />
-
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
   );
 }
 
